@@ -1,7 +1,7 @@
 {
   "name": "hachion",
   "version": "1.0.0",
-  "description": "AI-powered development tools with Codex integration. 27 agents with built-in Codex delegation, 20 commands, 13 skills, 2 MCP servers for code review, research, design, and workflow automation.",
+  "description": "AI-powered development tools with Codex integration. 27 agents with built-in Codex delegation, 20 commands, 14 skills, 2 MCP servers for code review, research, design, and workflow automation.",
   "author": {
     "name": "Rickie Lin",
     "url": "https://github.com/rickieplin"
