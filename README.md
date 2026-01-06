@@ -1,18 +1,18 @@
-# Compound Engineering Plugin (Personal Fork)
+# Hachion
 
 A Claude Code plugin that makes each unit of engineering work easier than the last.
 
-**This is a personal fork** with Codex (GPT-5.2) integration embedded into existing workflows.
+Built with Codex (GPT-5.2) integration embedded into existing workflows.
 
 ## Install
 
 This is a private repository. Clone directly:
 
 ```bash
-git clone https://github.com/rickieplin/compound-engineering-plugin.git ~/.claude/plugins/marketplaces/every-marketplace
+git clone https://github.com/rickieplin/hachion.git ~/.claude/plugins/marketplaces/hachion-marketplace
 ```
 
-## What's Different from Upstream
+## Features
 
 All review and research agents are enhanced with **Codex delegation**:
 - Agents intelligently decide when to handle directly vs delegate to Codex
@@ -28,17 +28,17 @@ Plan → Work → Review → Compound → Repeat
 
 | Command | Purpose |
 |---------|---------|
-| `/workflows:plan` | Turn feature ideas into detailed implementation plans |
-| `/workflows:work` | Execute plans with worktrees and task tracking |
-| `/workflows:review` | Multi-agent code review (with Codex delegation) |
-| `/workflows:compound` | Document learnings to make future work easier |
+| `/hachion:plan` | Turn feature ideas into detailed implementation plans |
+| `/hachion:work` | Execute plans with worktrees and task tracking |
+| `/hachion:review` | Multi-agent code review (with Codex delegation) |
+| `/hachion:compound` | Document learnings to make future work easier |
 
 ## Syncing with Upstream
 
-To pull updates from the original repository:
+To pull updates from the original compound-engineering repository:
 
 ```bash
-cd ~/.claude/plugins/marketplaces/every-marketplace
+cd ~/.claude/plugins/marketplaces/hachion-marketplace
 git fetch upstream
 git merge upstream/main
 git push origin main
@@ -50,7 +50,7 @@ git push origin main
 
 Traditional development accumulates technical debt. Every feature adds complexity. The codebase becomes harder to work with over time.
 
-Compound engineering inverts this. 80% is in planning and review, 20% is in execution:
+Hachion inverts this. 80% is in planning and review, 20% is in execution:
 - Plan thoroughly before writing code
 - Review to catch issues and capture learnings
 - Codify knowledge so it's reusable
@@ -58,10 +58,8 @@ Compound engineering inverts this. 80% is in planning and review, 20% is in exec
 
 ## Learn More
 
-- [Full component reference](plugins/compound-engineering/README.md) - all agents, commands, skills
-- [Compound engineering: how Every codes with agents](https://every.to/chain-of-thought/compound-engineering-how-every-codes-with-agents)
-- [The story behind compounding engineering](https://every.to/source-code/my-ai-had-already-fixed-the-code-before-i-saw-it)
+- [Full component reference](plugins/hachion/README.md) - all agents, commands, skills
 
 ---
 
-*Forked from [EveryInc/compound-engineering-plugin](https://github.com/EveryInc/compound-engineering-plugin)*
+*Based on [EveryInc/compound-engineering-plugin](https://github.com/EveryInc/compound-engineering-plugin)*

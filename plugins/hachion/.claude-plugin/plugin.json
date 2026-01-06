@@ -1,0 +1,38 @@
+{
+  "name": "hachion",
+  "version": "1.0.0",
+  "description": "AI-powered development tools with Codex integration. 27 agents with built-in Codex delegation, 20 commands, 13 skills, 2 MCP servers for code review, research, design, and workflow automation.",
+  "author": {
+    "name": "Rickie Lin",
+    "url": "https://github.com/rickieplin"
+  },
+  "homepage": "https://github.com/rickieplin/hachion",
+  "repository": "https://github.com/rickieplin/hachion",
+  "license": "MIT",
+  "keywords": [
+    "ai-powered",
+    "hachion",
+    "workflow-automation",
+    "code-review",
+    "rails",
+    "ruby",
+    "python",
+    "typescript",
+    "knowledge-management",
+    "codex",
+    "gpt-5",
+    "cost-efficient"
+  ],
+  "mcpServers": {
+    "pw": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"],
+      "env": {}
+    },
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp"
+    }
+  }
+}
