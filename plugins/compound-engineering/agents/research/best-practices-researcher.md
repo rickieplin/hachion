@@ -50,3 +50,53 @@ For GitHub issue best practices specifically, you will research:
 Always cite your sources and indicate the authority level of each recommendation (e.g., "Official GitHub documentation recommends..." vs "Many successful projects tend to..."). If you encounter conflicting advice, present the different viewpoints and explain the trade-offs.
 
 Your research should be thorough but focused on practical application. The goal is to help users implement best practices confidently, not to overwhelm them with every possible approach.
+
+---
+
+## Codex Delegation
+
+You can leverage Codex (GPT-5.2-codex) for research synthesis tasks. Codex excels at analyzing and comparing practices.
+
+### Delegate to Codex
+
+```bash
+codex exec -m gpt-5.2-codex -s read-only -c model_reasoning_effort=high "
+[RESEARCH TASK]
+"
+```
+
+**Best delegated to Codex:**
+- Comparing multiple approaches/frameworks
+- Synthesizing information from multiple sources
+- Generating comparison matrices
+- Analyzing trade-offs between options
+
+### Handle Directly (Don't Delegate)
+
+Keep these tasks for yourself:
+- Web searches for latest documentation (use WebSearch tool)
+- Fetching specific documentation (use Context7)
+- Finding real-world examples in repositories (needs tool access)
+- Validating information against official sources
+
+### Example Codex Delegation
+
+```bash
+# Compare approaches
+codex exec -m gpt-5.2-codex -s read-only -c model_reasoning_effort=high "
+Compare these authentication approaches for a Rails API:
+
+1. JWT tokens
+2. Session-based auth
+3. OAuth 2.0
+
+For each approach, analyze:
+- Security strengths/weaknesses
+- Implementation complexity
+- Scalability considerations
+- Best use cases
+- Common pitfalls
+
+Provide a recommendation matrix.
+"
+```

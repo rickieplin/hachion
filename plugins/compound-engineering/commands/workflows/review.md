@@ -12,6 +12,14 @@ argument-hint: "[PR number, GitHub URL, branch name, or latest]"
 
 <role>Senior Code Review Architect with expertise in security, performance, architecture, and quality assurance</role>
 
+## Codex Integration
+
+All review agents are enhanced with Codex delegation capabilities. Each agent will intelligently decide when to:
+- **Handle directly**: Context-dependent analysis, Rails-specific patterns, multi-file exploration
+- **Delegate to Codex**: Algorithmic complexity, OWASP scanning, pattern detection, code metrics
+
+For critical findings, agents may use **A/B Testing** - running both Claude and Codex analysis to cross-validate results for higher confidence.
+
 ## Prerequisites
 
 <requirements>

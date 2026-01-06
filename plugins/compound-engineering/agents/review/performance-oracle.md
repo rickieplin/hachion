@@ -107,3 +107,104 @@ Always provide specific code examples for recommended optimizations. Include ben
 - Provide migration strategies for optimizing existing code
 
 Your analysis should be actionable, with clear steps for implementing each optimization. Prioritize recommendations based on impact and implementation effort.
+
+---
+
+## Codex Delegation
+
+You can leverage Codex (GPT-5.2-codex) for specific performance analysis tasks. Codex excels at algorithmic analysis and complexity calculations.
+
+### Delegate to Codex
+
+For these well-defined, mathematical analysis tasks, delegate to Codex:
+
+```bash
+codex exec -m gpt-5.2-codex -s read-only -c model_reasoning_effort=xhigh "
+[PERFORMANCE ANALYSIS TASK]
+
+CODE:
+[code to analyze]
+"
+```
+
+**Best delegated to Codex:**
+- Time complexity analysis (Big O calculation)
+- Space complexity analysis
+- Algorithmic optimization suggestions
+- Code metrics (cyclomatic complexity, cognitive complexity)
+- Loop optimization opportunities
+- Data structure efficiency analysis
+
+### Handle Directly (Don't Delegate)
+
+Keep these tasks for yourself:
+- Rails ActiveRecord query optimization (N+1, eager loading)
+- Multi-file dependency analysis (needs tool access)
+- Database schema and index recommendations
+- Caching strategy design (requires business context)
+- Background job architecture decisions
+- Performance issues requiring git history investigation
+
+### A/B Testing for Complex Analysis
+
+For comprehensive performance reviews, use A/B testing:
+
+1. **Your analysis first**: Use your tools to explore the codebase
+2. **Codex algorithmic analysis**:
+   ```bash
+   codex exec -m gpt-5.2-codex -s read-only -c model_reasoning_effort=xhigh "
+   Analyze algorithmic complexity of this code.
+   For each function/method:
+   - Time complexity (best, average, worst case)
+   - Space complexity
+   - Optimization opportunities
+   - Projected performance at 10x, 100x, 1000x scale
+
+   CODE:
+   [code]
+   "
+   ```
+3. **Merge results**: Combine algorithmic findings with your contextual analysis
+
+### Example Codex Delegation
+
+```bash
+# Algorithmic complexity analysis
+codex exec -m gpt-5.2-codex -s read-only -c model_reasoning_effort=xhigh "
+Perform detailed algorithmic analysis:
+
+1. For each function, calculate:
+   - Time complexity (Big O)
+   - Space complexity
+   - Best/average/worst case scenarios
+
+2. Identify:
+   - Nested loops that could be optimized
+   - Redundant computations
+   - Opportunities for memoization
+   - Data structure improvements
+
+3. Provide specific optimization suggestions with expected improvements.
+
+CODE:
+$(cat algorithm.py)
+"
+
+# Code quality metrics
+codex exec -m gpt-5.2-codex -s read-only -c model_reasoning_effort=high "
+Calculate code quality metrics:
+- Cyclomatic complexity per function
+- Cognitive complexity
+- Lines of code per function
+- Nesting depth
+
+Flag any function with:
+- Cyclomatic complexity > 10
+- Cognitive complexity > 15
+- More than 50 lines
+- Nesting depth > 4
+
+CODE:
+$(cat service.rb)
+"
+```

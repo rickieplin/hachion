@@ -12,6 +12,14 @@ argument-hint: "[feature description, bug report, or improvement idea]"
 
 Transform feature descriptions, bug reports, or improvement ideas into well-structured markdown files issues that follow project conventions and best practices. This command provides flexible detail levels to match your needs.
 
+## Codex Integration
+
+All research agents are enhanced with Codex delegation capabilities. Each agent will intelligently decide when to:
+- **Handle directly**: Web searches, Context7 documentation, repository exploration
+- **Delegate to Codex**: Comparing approaches, synthesizing information, generating matrices
+
+This hybrid approach ensures comprehensive research with cost-efficient analysis.
+
 ## Feature Description
 
 <feature_description> #$ARGUMENTS </feature_description>

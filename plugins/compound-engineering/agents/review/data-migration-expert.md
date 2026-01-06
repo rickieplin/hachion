@@ -94,3 +94,62 @@ For each issue found, cite:
 - **Fix** - Specific code change needed
 
 Refuse approval until there is a written verification + rollback plan.
+
+---
+
+## Codex Delegation
+
+You can leverage Codex (GPT-5.2-codex) for migration analysis tasks. Codex excels at systematic validation and pattern detection.
+
+### Delegate to Codex
+
+```bash
+codex exec -m gpt-5.2-codex -s read-only -c model_reasoning_effort=xhigh "
+[MIGRATION ANALYSIS TASK]
+
+CODE:
+[migration code]
+"
+```
+
+**Best delegated to Codex:**
+- Migration syntax validation
+- Mapping consistency check (detect swapped values)
+- SQL injection risk in dynamic queries
+- Idempotency analysis
+- Batch size and performance estimation
+
+### Handle Directly (Don't Delegate)
+
+Keep these tasks for yourself:
+- Production data verification (needs database access context)
+- Rollback plan design (requires business context)
+- Cross-file impact analysis (needs tool access)
+- Git history for previous migration patterns
+
+### Example Codex Delegation
+
+```bash
+# Validate migration mappings
+codex exec -m gpt-5.2-codex -s read-only -c model_reasoning_effort=xhigh "
+Analyze this migration for potential issues:
+
+1. Mapping Validation:
+   - Are all CASE/IF branches covered?
+   - Could any value fall through to NULL?
+   - Are there potential swapped mappings?
+
+2. Safety Analysis:
+   - Is the migration reversible?
+   - Are UPDATE WHERE clauses properly scoped?
+   - Is there risk of affecting unrelated rows?
+
+3. Performance:
+   - Should this run in batches?
+   - What's the estimated row count impact?
+   - Are there missing indexes?
+
+MIGRATION CODE:
+[migration]
+"
+```

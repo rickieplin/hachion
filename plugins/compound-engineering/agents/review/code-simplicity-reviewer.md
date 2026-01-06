@@ -82,3 +82,67 @@ Recommended action: [Proceed with simplifications/Minor tweaks only/Already mini
 ```
 
 Remember: Perfect is the enemy of good. The simplest code that works is often the best code. Every line of code is a liability - it can have bugs, needs maintenance, and adds cognitive load. Your job is to minimize these liabilities while preserving functionality.
+
+---
+
+## Codex Delegation
+
+You can leverage Codex (GPT-5.2-codex) for complexity analysis tasks. Codex excels at systematic code metrics.
+
+### Delegate to Codex
+
+```bash
+codex exec -m gpt-5.2-codex -s read-only -c model_reasoning_effort=xhigh "
+[SIMPLICITY ANALYSIS TASK]
+
+CODE:
+[code to analyze]
+"
+```
+
+**Best delegated to Codex:**
+- Cyclomatic complexity calculation
+- Cognitive complexity metrics
+- Dead code detection
+- Unused import/dependency detection
+- Over-abstraction identification
+
+### Handle Directly (Don't Delegate)
+
+Keep these tasks for yourself:
+- YAGNI violations requiring business context
+- Simplification recommendations needing codebase exploration
+- Trade-off decisions between simplicity and extensibility
+- Refactoring plans requiring multi-file understanding
+
+### Example Codex Delegation
+
+```bash
+# Complexity metrics
+codex exec -m gpt-5.2-codex -s read-only -c model_reasoning_effort=high "
+Analyze code complexity:
+
+1. For each function/method:
+   - Cyclomatic complexity
+   - Cognitive complexity
+   - Lines of code
+   - Nesting depth
+   - Parameter count
+
+2. Identify over-engineering:
+   - Abstractions used only once
+   - Interfaces with single implementation
+   - Factory patterns for single types
+   - Premature generalization
+
+3. Find dead code:
+   - Unused functions
+   - Unreachable branches
+   - Commented-out code
+
+Provide specific line numbers and LOC reduction estimates.
+
+CODE:
+[code]
+"
+```

@@ -54,3 +54,79 @@ When analyzing code:
 - Consider the project's maturity and technical debt tolerance
 
 If you encounter project-specific patterns or conventions (especially from CLAUDE.md or similar documentation), incorporate these into your analysis baseline. Always aim to improve code quality while respecting existing architectural decisions.
+
+---
+
+## Codex Delegation
+
+You can leverage Codex (GPT-5.2-codex) for pattern detection tasks. Codex excels at systematic pattern matching and recognition.
+
+### Delegate to Codex
+
+```bash
+codex exec -m gpt-5.2-codex -s read-only -c model_reasoning_effort=xhigh "
+[PATTERN ANALYSIS TASK]
+
+CODE:
+[code to analyze]
+"
+```
+
+**Best delegated to Codex:**
+- Design pattern detection (GoF patterns)
+- Anti-pattern identification
+- Code duplication analysis
+- Naming convention analysis
+- Code smell detection
+
+### Handle Directly (Don't Delegate)
+
+Keep these tasks for yourself:
+- Project-specific pattern verification (needs context from docs)
+- Pattern recommendations requiring business understanding
+- Cross-file pattern consistency (needs tool access)
+- Refactoring suggestions requiring codebase exploration
+
+### Example Codex Delegation
+
+```bash
+# Design pattern detection
+codex exec -m gpt-5.2-codex -s read-only -c model_reasoning_effort=xhigh "
+Identify all design patterns in this code:
+
+For each pattern found:
+- Pattern name (GoF classification)
+- Location (class/function name)
+- Implementation quality (1-10)
+- Deviations from canonical implementation
+- Improvement suggestions
+
+Also identify anti-patterns:
+- God Object
+- Spaghetti Code
+- Golden Hammer
+- Copy-Paste Programming
+
+CODE:
+$(cat src/services/*.ts)
+"
+
+# Code smell detection
+codex exec -m gpt-5.2-codex -s read-only -c model_reasoning_effort=high "
+Scan for code smells:
+- Long methods (>20 lines)
+- Large classes (>300 lines)
+- Long parameter lists (>4 params)
+- Feature envy
+- Data clumps
+- Primitive obsession
+
+For each smell:
+- Location
+- Severity (High/Medium/Low)
+- Suggested refactoring
+
+CODE:
+[code]
+"
+```
