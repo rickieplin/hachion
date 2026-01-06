@@ -5,21 +5,57 @@ All notable changes to the compound-engineering plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.20.0] - 2026-01-01
+## [2.22.0] - 2026-01-05
+
+### Added
+
+- **`rclone` skill** - Upload files to S3, Cloudflare R2, Backblaze B2, and other cloud storage providers
 
 ### Changed
 
-- **`create-agent-skills` skill** - Complete rewrite to match Anthropic's official skill specification:
-  - **Format change**: Skills now use standard markdown headings (`## Quick Start`, `## Instructions`), NOT XML tags. The previous version incorrectly recommended XML tags which is not the official format.
-  - **Naming convention**: Updated to use gerund form (`creating-agent-skills`, `processing-pdfs`) per official spec
-  - **Description format**: Must be third person, include both what and when to use
-  - Added `references/official-spec.md` - Anthropic's official skill specification from code.claude.com/docs/en/skills
-  - Added `references/best-practices.md` - Skill authoring best practices from platform.claude.com
-  - Removed obsolete `references/use-xml-tags.md` - this was incorrect guidance
+- **`/feature-video` command** - Enhanced with:
+  - Better ffmpeg commands for video/GIF creation (proper scaling, framerate control)
+  - rclone integration for cloud uploads
+  - Screenshot copying to project folder
+  - Improved upload options workflow
 
-### Philosophy
+### Summary
 
-This update aligns the skill with Anthropic's official documentation. The key insight: **Skills are prompts**. All standard prompting best practices apply. Use standard markdown, not custom XML tags. Keep SKILL.md under 500 lines with progressive disclosure to reference files.
+- 27 agents, 20 commands, 13 skills, 2 MCP servers
+
+---
+
+## [2.21.0] - 2026-01-05
+
+### Fixed
+
+- Version history cleanup after merge conflict resolution
+
+### Summary
+
+This release consolidates all recent work:
+- `/feature-video` command for recording PR demos
+- `/deepen-plan` command for enhanced planning
+- `create-agent-skills` skill rewrite (official spec compliance)
+- `agent-native-architecture` skill major expansion
+- `dhh-rails-style` skill consolidation (merged dhh-ruby-style)
+- 27 agents, 20 commands, 12 skills, 2 MCP servers
+
+---
+
+## [2.20.0] - 2026-01-05
+
+### Added
+
+- **`/feature-video` command** - Record video walkthroughs of features using Playwright
+
+### Changed
+
+- **`create-agent-skills` skill** - Complete rewrite to match Anthropic's official skill specification
+
+### Removed
+
+- **`dhh-ruby-style` skill** - Merged into `dhh-rails-style` skill
 
 ---
 
@@ -103,11 +139,6 @@ These updates operationalize a key insight from building agent-native mobile app
   - **architecture.md** - Added path-based multi-tenancy, database patterns (UUIDs, state as records, hard deletes, counter caches), background job patterns (transaction safety, error handling, batch processing), email patterns, security patterns (XSS, SSRF, CSP), Active Storage patterns
   - **gems.md** - Added expanded what-they-avoid section (service objects, form objects, decorators, CSS preprocessors, React/Vue), testing philosophy with Minitest/fixtures patterns
 
-- **`dhh-ruby-style` skill** - Expanded patterns.md with:
-  - Development philosophy (ship/validate/refine, fix root causes, vanilla Rails first)
-  - Rails 7.1+ idioms (params.expect, StringInquirer, positive naming conventions)
-  - Extraction guidelines (rule of three, start in controller extract when complex)
-
 ### Credits
 
 - Reference patterns derived from [Marc Köhlbrugge's Unofficial 37signals Coding Style Guide](https://github.com/marckohlbrugge/unofficial-37signals-coding-style-guide)
@@ -116,10 +147,10 @@ These updates operationalize a key insight from building agent-native mobile app
 
 ### Fixed
 
-- **All skills** - Fixed spec compliance issues across 13 skills:
+- **All skills** - Fixed spec compliance issues across 12 skills:
   - Reference files now use proper markdown links (`[file.md](./references/file.md)`) instead of backtick text
   - Descriptions now use third person ("This skill should be used when...") per skill-creator spec
-  - Affected skills: agent-native-architecture, andrew-kane-gem-writer, compound-docs, create-agent-skills, dhh-rails-style, dhh-ruby-style, dspy-ruby, every-style-editor, file-todos, frontend-design, gemini-imagegen
+  - Affected skills: agent-native-architecture, andrew-kane-gem-writer, compound-docs, create-agent-skills, dhh-rails-style, dspy-ruby, every-style-editor, file-todos, frontend-design, gemini-imagegen
 
 ### Added
 

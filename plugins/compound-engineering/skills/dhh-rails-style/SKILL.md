@@ -4,7 +4,7 @@ description: This skill should be used when writing Ruby and Rails code in DHH's
 ---
 
 <objective>
-Apply 37signals/DHH Rails conventions to Ruby and Rails code. This skill provides domain expertise extracted from analyzing production 37signals codebases (Fizzy/Campfire).
+Apply 37signals/DHH Rails conventions to Ruby and Rails code. This skill provides comprehensive domain expertise extracted from analyzing production 37signals codebases (Fizzy/Campfire) and DHH's code review patterns.
 </objective>
 
 <essential_principles>
@@ -27,17 +27,28 @@ Apply 37signals/DHH Rails conventions to Ruby and Rails code. This skill provide
 - redis (database for everything)
 - view_component (partials work fine)
 - GraphQL (REST with Turbo sufficient)
+- factory_bot (fixtures are simpler)
+- rspec (Minitest ships with Rails)
+- Tailwind (native CSS with layers)
+
+**Development Philosophy:**
+- Ship, Validate, Refine - prototype-quality code to production to learn
+- Fix root causes, not symptoms
+- Write-time operations over read-time computations
+- Database constraints over ActiveRecord validations
 </essential_principles>
 
 <intake>
 What are you working on?
 
-1. **Controllers** - REST mapping, concerns, Turbo responses
-2. **Models** - Concerns, state records, callbacks, scopes
+1. **Controllers** - REST mapping, concerns, Turbo responses, API patterns
+2. **Models** - Concerns, state records, callbacks, scopes, POROs
 3. **Views & Frontend** - Turbo, Stimulus, CSS, partials
-4. **Architecture** - Routing, multi-tenancy, authentication, jobs
-5. **Code Review** - Review code against DHH style
-6. **General Guidance** - Philosophy and conventions
+4. **Architecture** - Routing, multi-tenancy, authentication, jobs, caching
+5. **Testing** - Minitest, fixtures, integration tests
+6. **Gems & Dependencies** - What to use vs avoid
+7. **Code Review** - Review code against DHH style
+8. **General Guidance** - Philosophy and conventions
 
 **Specify a number or describe your task.**
 </intake>
@@ -48,9 +59,11 @@ What are you working on?
 | 1, "controller" | [controllers.md](./references/controllers.md) |
 | 2, "model" | [models.md](./references/models.md) |
 | 3, "view", "frontend", "turbo", "stimulus", "css" | [frontend.md](./references/frontend.md) |
-| 4, "architecture", "routing", "auth", "job" | [architecture.md](./references/architecture.md) |
-| 5, "review" | Read all references, then review code |
-| 6, general task | Read relevant references based on context |
+| 4, "architecture", "routing", "auth", "job", "cache" | [architecture.md](./references/architecture.md) |
+| 5, "test", "testing", "minitest", "fixture" | [testing.md](./references/testing.md) |
+| 6, "gem", "dependency", "library" | [gems.md](./references/gems.md) |
+| 7, "review" | Read all references, then review code |
+| 8, general task | Read relevant references based on context |
 
 **After reading relevant references, apply patterns to the user's code.**
 </routing>
@@ -70,6 +83,7 @@ What are you working on?
 - `chronologically`, `reverse_chronologically`, `alphabetically`, `latest`
 - `preloaded` (standard eager loading name)
 - `indexed_by`, `sorted_by` (parameterized)
+- `active`, `unassigned` (business terms, not SQL-ish)
 
 ## REST Mapping
 
@@ -80,6 +94,55 @@ POST /cards/:id/close    → POST /cards/:id/closure
 DELETE /cards/:id/close  → DELETE /cards/:id/closure
 POST /cards/:id/archive  → POST /cards/:id/archival
 ```
+
+## Ruby Syntax Preferences
+
+```ruby
+# Symbol arrays with spaces inside brackets
+before_action :set_message, only: %i[ show edit update destroy ]
+
+# Private method indentation
+  private
+    def set_message
+      @message = Message.find(params[:id])
+    end
+
+# Expression-less case for conditionals
+case
+when params[:before].present?
+  messages.page_before(params[:before])
+else
+  messages.last_page
+end
+
+# Bang methods for fail-fast
+@message = Message.create!(params)
+
+# Ternaries for simple conditionals
+@room.direct? ? @room.users : @message.mentionees
+```
+
+## Key Patterns
+
+**State as Records:**
+```ruby
+Card.joins(:closure)         # closed cards
+Card.where.missing(:closure) # open cards
+```
+
+**Current Attributes:**
+```ruby
+belongs_to :creator, default: -> { Current.user }
+```
+
+**Authorization on Models:**
+```ruby
+class User < ApplicationRecord
+  def can_administer?(message)
+    message.creator == self || admin?
+  end
+end
+```
 </quick_reference>
 
 <reference_index>
@@ -89,11 +152,12 @@ All detailed patterns in `references/`:
 
 | File | Topics |
 |------|--------|
-| [controllers.md](./references/controllers.md) | REST mapping, concerns, Turbo responses, API patterns |
-| [models.md](./references/models.md) | Concerns, state records, callbacks, scopes, POROs |
-| [frontend.md](./references/frontend.md) | Turbo, Stimulus, CSS architecture, view patterns |
-| [architecture.md](./references/architecture.md) | Routing, auth, jobs, caching, multi-tenancy, config |
-| [gems.md](./references/gems.md) | What they use vs avoid, and why |
+| [controllers.md](./references/controllers.md) | REST mapping, concerns, Turbo responses, API patterns, HTTP caching |
+| [models.md](./references/models.md) | Concerns, state records, callbacks, scopes, POROs, authorization, broadcasting |
+| [frontend.md](./references/frontend.md) | Turbo Streams, Stimulus controllers, CSS layers, OKLCH colors, partials |
+| [architecture.md](./references/architecture.md) | Routing, authentication, jobs, Current attributes, caching, database patterns |
+| [testing.md](./references/testing.md) | Minitest, fixtures, unit/integration/system tests, testing patterns |
+| [gems.md](./references/gems.md) | What they use vs avoid, decision framework, Gemfile examples |
 </reference_index>
 
 <success_criteria>
@@ -105,8 +169,16 @@ Code follows DHH style when:
 - Database-backed solutions preferred over external services
 - Tests use Minitest with fixtures
 - Turbo/Stimulus for interactivity (no heavy JS frameworks)
+- Native CSS with modern features (layers, OKLCH, nesting)
+- Authorization logic lives on User model
+- Jobs are shallow wrappers calling model methods
 </success_criteria>
 
 <credits>
-Based on [The Unofficial 37signals/DHH Rails Style Guide](https://gist.github.com/marckohlbrugge/d363fb90c89f71bd0c816d24d7642aca) by [Marc Köhlbrugge](https://x.com/marckohlbrugge), generated through deep analysis of the Fizzy codebase.
+Based on [The Unofficial 37signals/DHH Rails Style Guide](https://github.com/marckohlbrugge/unofficial-37signals-coding-style-guide) by [Marc Köhlbrugge](https://x.com/marckohlbrugge), generated through deep analysis of 265 pull requests from the Fizzy codebase.
+
+**Important Disclaimers:**
+- LLM-generated guide - may contain inaccuracies
+- Code examples from Fizzy are licensed under the O'Saasy License
+- Not affiliated with or endorsed by 37signals
 </credits>
